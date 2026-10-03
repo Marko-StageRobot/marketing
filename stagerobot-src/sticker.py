@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Square stickers (Powered by Unicore, This Terns Me On) — 2in × 2in, rounded die-cut, 1/16in bleed.
+"""Square stickers (Powered by Unicore, This Terns Me On, We Don't Make Robots) — 2in × 2in, rounded die-cut, 1/16in bleed.
 
     python3 sticker.py   → ~/Desktop/stagerobot-merch/
 All text is drawn as pixel rects, so there are no fonts to embed or outline.
@@ -20,6 +20,8 @@ art.FONT.update({
     "I": ["###", ".#.", ".#.", ".#.", ".#.", ".#.", "###"],
     ".": [".", ".", ".", ".", ".", ".", "#"],
     "X": ["#...#", "#...#", ".#.#.", "..#..", ".#.#.", "#...#", "#...#"],
+    "K": ["#...#", "#..#.", "#.#..", "##...", "#.#..", "#..#.", "#...#"],
+    "'": ["#", "#", ".", ".", ".", ".", "."],
 })
 
 S = 1000            # trim size in units (1000 = 2 in)
@@ -81,7 +83,27 @@ def tern():
             + grad_text("ME ON", 14, 548, "gt", "#22E08A", "#22D3EE"))
 
 
-DESIGNS = {"powered-by-unicore": unicore, "this-terns-me-on": tern}
+def glowy_robot(cell, uid):
+    """Robot mark with a wider halo behind the eyes than the site version has."""
+    eyes = [row if i in (6, 7) else "." * len(row) for i, row in enumerate(art.ROBOT)]
+    lit = art.pixels(eyes, cell, keys="Rr", color=art.PAL["R"])
+    halo = (f'<defs><filter id="{uid}-halo" filterUnits="userSpaceOnUse" x="0" y="0" width="{24 * cell}" height="{16 * cell}">'
+            f'<feGaussianBlur stdDeviation="{cell * 1.7:g}"/></filter>'
+            f'<filter id="{uid}-bloom" filterUnits="userSpaceOnUse" x="0" y="0" width="{24 * cell}" height="{16 * cell}">'
+            f'<feGaussianBlur stdDeviation="{cell * 0.6:g}"/></filter></defs>'
+            f'<g filter="url(#{uid}-halo)" opacity=".7">{lit}</g>'
+            f'<g filter="url(#{uid}-bloom)">{lit}</g>')
+    wrap = '<g class="sr-eyes-wrap">'
+    return art.robot_svg_body(cell, uid=uid).replace(wrap, halo + wrap, 1)
+
+
+def no_robots():
+    return (f'<g transform="translate({(S - 288) / 2} 64)">{glowy_robot(12, "stk")}</g>'
+            f'<g shape-rendering="crispEdges">{centred("WE DON\'T MAKE", 11, 400, "#C9C7E0")}</g>'
+            + grad_text("ROBOTS.", 22, 505, "gr", "#A78BFA", "#22D3EE"))
+
+
+DESIGNS = {"powered-by-unicore": unicore, "this-terns-me-on": tern, "we-dont-make-robots": no_robots}
 
 
 def sticker(design="powered-by-unicore", dieline=False):
