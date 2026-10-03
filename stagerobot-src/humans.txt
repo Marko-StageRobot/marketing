@@ -1,0 +1,13 @@
+/* TEAM */
+  Founder & CEO: Alan Smithee
+  Location: Los Angeles — or near it
+
+  CTO & Head of Engineering: Marko Dragic
+  Previously: Black Mesa Research Facility (Anomalous Materials)
+  Location: not Sector C
+
+  [TEAM MEMBER 3]: [pending generation]
+
+/* SITE */
+  Standards: HTML, CSS, an unreasonable number of em-dashes
+  Components: one robot, two masks, three pillars (five)

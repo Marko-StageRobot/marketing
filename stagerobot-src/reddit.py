@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+"""Reddit-avatar-style StageRobot: chunky, cartoony, thick outlines, still evil.
+
+    python3 reddit.py   → ~/Desktop/stagerobot-site/assets/img/social/reddit-*
+"""
+import shutil
+import subprocess
+from pathlib import Path
+
+OUT = Path.home() / "Desktop" / "stagerobot-site" / "assets" / "img" / "social"
+
+INK = "#14122B"
+SW = 7  # outline weight — chunky is the point
+
+DEFS = f"""
+<defs>
+  <filter id="eyeglow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+  <radialGradient id="bg-dark" cx=".5" cy=".38" r=".7">
+    <stop offset="0" stop-color="#3B2475"/><stop offset=".55" stop-color="#15112E"/><stop offset="1" stop-color="#0B0A18"/></radialGradient>
+  <linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+  <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFF4DC" stop-opacity=".0"/><stop offset=".35" stop-color="#FFF4DC" stop-opacity=".16"/><stop offset="1" stop-color="#FFF4DC" stop-opacity=".05"/></linearGradient>
+</defs>
+"""
+
+COMEDY = f"""
+<path d="M-36,-30 C-36,-50 36,-50 36,-30 L33,6 C29,33 13,46 0,46 C-13,46 -29,33 -33,6 Z" fill="#FFC23D" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
+<path d="M-26,-38 C-14,-44 6,-44 18,-40" fill="none" stroke="#FFE7A6" stroke-width="6" stroke-linecap="round"/>
+<path d="M-23,-12 q8,-11 16,0 M7,-12 q8,-11 16,0" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>
+<path d="M-21,8 q21,30 42,0 z" fill="{INK}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>
+<path d="M-12,14 q12,12 24,0" fill="#FF6B81"/>
+<circle cx="-26" cy="4" r="5" fill="#FF8A5B" opacity=".6"/><circle cx="26" cy="4" r="5" fill="#FF8A5B" opacity=".6"/>
+"""
+
+TRAGEDY = f"""
+<path d="M-36,-30 C-36,-50 36,-50 36,-30 L33,6 C29,33 13,46 0,46 C-13,46 -29,33 -33,6 Z" fill="#8B5CF6" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
+<path d="M-26,-38 C-14,-44 6,-44 18,-40" fill="none" stroke="#B9A0FF" stroke-width="6" stroke-linecap="round"/>
+<path d="M-24,-8 l15,-8 M24,-8 l-15,-8" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>
+<path d="M-18,28 q18,-22 36,0 z" fill="{INK}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>
+<path d="M-17,-2 q-4,8 0,11 q4,-3 0,-11 z" fill="#22D3EE"/>
+"""
+
+ROBOT = f"""
+<!-- ground shadow -->
+<ellipse cx="200" cy="452" rx="110" ry="14" fill="#000" opacity=".35"/>
+
+<!-- legs + feet -->
+<rect x="163" y="382" width="26" height="50" rx="10" fill="#8F91AB" stroke="{INK}" stroke-width="{SW}"/>
+<rect x="211" y="382" width="26" height="50" rx="10" fill="#8F91AB" stroke="{INK}" stroke-width="{SW}"/>
+<path d="M146,448 q0,-26 28,-26 h8 q18,0 18,26 z" fill="#D4D5E6" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
+<path d="M200,448 q0,-26 18,-26 h8 q28,0 28,26 z" fill="#D4D5E6" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
+
+<!-- left arm: waving, badly -->
+<path d="M148,318 C118,322 100,300 96,276" fill="none" stroke="{INK}" stroke-width="{SW + 16}" stroke-linecap="round"/>
+<path d="M148,318 C118,322 100,300 96,276" fill="none" stroke="#8F91AB" stroke-width="16" stroke-linecap="round"/>
+<circle cx="94" cy="266" r="17" fill="#D4D5E6" stroke="{INK}" stroke-width="{SW}"/>
+
+<!-- body -->
+<path d="M140,300 C140,282 158,276 200,276 C242,276 260,282 260,300 L262,368 C262,392 240,400 200,400 C160,400 138,392 138,368 Z" fill="#D4D5E6" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
+<path d="M246,300 L248,368 C248,384 236,390 214,392" fill="none" stroke="#A9AAC2" stroke-width="10" stroke-linecap="round"/>
+<rect x="158" y="306" width="68" height="44" rx="12" fill="#0B0A18" stroke="{INK}" stroke-width="5"/>
+<circle cx="176" cy="328" r="7" fill="#22D3EE"/><circle cx="194" cy="328" r="7" fill="#8B5CF6"/><circle cx="212" cy="328" r="7" fill="#22D3EE"/>
+<circle cx="238" cy="366" r="10" fill="#FF1E3C" stroke="{INK}" stroke-width="5"/>
+<circle cx="235" cy="363" r="3" fill="#fff" opacity=".8"/>
+
+<!-- right arm + the mask stick -->
+<path d="M258,322 C282,330 296,322 306,306" fill="none" stroke="{INK}" stroke-width="{SW + 16}" stroke-linecap="round"/>
+<path d="M258,322 C282,330 296,322 306,306" fill="none" stroke="#8F91AB" stroke-width="16" stroke-linecap="round"/>
+<line x1="312" y1="298" x2="326" y2="262" stroke="{INK}" stroke-width="12" stroke-linecap="round"/>
+<line x1="312" y1="298" x2="326" y2="262" stroke="#C98A4A" stroke-width="5" stroke-linecap="round"/>
+
+
+<!-- neck -->
+<rect x="182" y="262" width="36" height="22" rx="6" fill="#8F91AB" stroke="{INK}" stroke-width="{SW}"/>
+
+<!-- antenna: slightly bent, very confident -->
+<path d="M200,110 C200,90 208,80 214,62" fill="none" stroke="{INK}" stroke-width="{SW + 8}" stroke-linecap="round"/>
+<path d="M200,110 C200,90 208,80 214,62" fill="none" stroke="#8F91AB" stroke-width="8" stroke-linecap="round"/>
+<circle cx="217" cy="48" r="26" fill="#FF1E3C" opacity=".45" filter="url(#eyeglow)"/>
+<circle cx="217" cy="48" r="17" fill="#FF1E3C" stroke="{INK}" stroke-width="{SW}"/>
+<circle cx="211" cy="42" r="5" fill="#fff" opacity=".85"/>
+
+<!-- ear bolts -->
+<rect x="66" y="164" width="30" height="58" rx="12" fill="#8F91AB" stroke="{INK}" stroke-width="{SW}"/>
+<rect x="304" y="164" width="30" height="58" rx="12" fill="#8F91AB" stroke="{INK}" stroke-width="{SW}"/>
+
+<!-- head -->
+<rect x="86" y="104" width="228" height="170" rx="62" fill="#D4D5E6" stroke="{INK}" stroke-width="{SW}"/>
+<path d="M120,126 C140,114 170,112 196,113" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".8"/>
+<path d="M296,160 C300,200 296,236 270,256" fill="none" stroke="#A9AAC2" stroke-width="10" stroke-linecap="round"/>
+
+<!-- visor -->
+<rect x="112" y="138" width="176" height="92" rx="40" fill="#0B0A18" stroke="{INK}" stroke-width="5"/>
+<path d="M132,152 C150,144 176,143 196,144" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".18"/>
+
+<!-- eyes: mismatched, red, up to something -->
+<g class="eyes">
+  <circle cx="163" cy="188" r="30" fill="#FF1E3C" opacity=".75" filter="url(#eyeglow)"/>
+  <circle cx="240" cy="191" r="24" fill="#FF1E3C" opacity=".75" filter="url(#eyeglow)"/>
+  <circle cx="163" cy="188" r="23" fill="#FF1E3C"/>
+  <circle cx="240" cy="191" r="17" fill="#FF1E3C"/>
+  <circle cx="170" cy="191" r="9" fill="#5A0010"/>
+  <circle cx="245" cy="194" r="7" fill="#5A0010"/>
+  <circle cx="155" cy="180" r="6" fill="#fff" opacity=".9"/>
+  <circle cx="234" cy="184" r="4.5" fill="#fff" opacity=".9"/>
+  <!-- scheming eyelids -->
+  <path d="M132,160 L196,176 L196,150 L132,150 Z" fill="#0B0A18"/>
+  <path d="M212,178 L268,166 L268,150 L212,150 Z" fill="#0B0A18"/>
+</g>
+
+<!-- grin -->
+<path d="M156,244 C170,264 232,264 246,244 Z" fill="{INK}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>
+<rect x="170" y="244" width="14" height="9" rx="2" fill="#fff"/>
+<rect x="208" y="244" width="14" height="9" rx="2" fill="#fff"/>
+<path d="M186,256 q15,8 30,0" fill="#FF6B81"/>
+
+<!-- masks: tragedy behind, comedy in front -->
+<g transform="translate(378 206) rotate(16)">{TRAGEDY}</g>
+<g transform="translate(330 220) rotate(-10)">{COMEDY}</g>
+<circle cx="310" cy="302" r="16" fill="#D4D5E6" stroke="{INK}" stroke-width="{SW}"/>
+"""
+
+
+def svg(viewbox, body, size=None):
+    wh = f' width="{size}" height="{size}"' if size else ""
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}"{wh} role="img" '
+        f'aria-label="StageRobot mascot, cartoon style, holding comedy and tragedy masks">{DEFS}{body}</svg>'
+    )
+
+
+def profile(bg):
+    """Square, circle-safe profile picture. Reddit crops to a circle."""
+    fill = "url(#bg-dark)" if bg == "dark" else "url(#bg-grad)"
+    extra = ""
+    if bg == "dark":
+        extra = '<path d="M180,15 L90,395 L360,395 L270,15 Z" fill="url(#beam)"/>'
+    else:
+        extra = '<circle cx="220" cy="180" r="150" fill="#fff" opacity=".12"/>'
+    # square crop on the bust; circle-safe (Reddit crops to a circle)
+    return svg(
+        "50 15 380 380",
+        f'<rect x="50" y="15" width="380" height="380" fill="{fill}"/>{extra}{ROBOT}',
+    )
+
+
+def full_body():
+    return svg("40 0 400 480", ROBOT)
+
+
+def png(src: Path, width: int, out: Path):
+    if shutil.which("rsvg-convert"):
+        subprocess.run(["rsvg-convert", "-w", str(width), "-o", str(out), str(src)], check=True)
+
+
+if __name__ == "__main__":
+    OUT.mkdir(parents=True, exist_ok=True)
+    files = {
+        "reddit-avatar-full-body.svg": full_body(),
+        "reddit-profile-dark.svg": profile("dark"),
+        "reddit-profile-gradient.svg": profile("gradient"),
+    }
+    for name, text in files.items():
+        p = OUT / name
+        p.write_text(text, encoding="utf-8")
+    png(OUT / "reddit-avatar-full-body.svg", 1000, OUT / "reddit-avatar-full-body.png")
+    for v in ("dark", "gradient"):
+        png(OUT / f"reddit-profile-{v}.svg", 256, OUT / f"reddit-profile-{v}-256.png")
+        png(OUT / f"reddit-profile-{v}.svg", 1024, OUT / f"reddit-profile-{v}-1024.png")
+    print("built →", OUT)

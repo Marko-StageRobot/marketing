@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StageRobot Brand Book</title>
+<meta name="description" content="Logo, color, type and voice guidelines for The Stage Robot Company. The eyes are always red.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Silkscreen&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+  .bb-hero { padding-block: 72px 56px; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: center; }
+  .bb-hero .mark { width: 100%; }
+  .bb-hero h1 { font-size: clamp(44px, 7vw, 88px); letter-spacing: -.045em; font-weight: 700; margin-block: 18px; }
+  .ver { font: 13px/1.6 var(--f-mono); color: var(--muted); }
+  .ver s { opacity: .7; }
+  .bb-sec { padding-block: 64px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+  .bb-sec > header { display: grid; gap: 12px; align-content: start; }
+  .bb-sec h2 { font-size: 32px; }
+  .bb-sec header p { color: var(--muted); font-size: 15px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .tile { margin: 0; border-radius: 18px; border: 1px solid var(--line); overflow: hidden; display: grid; }
+  .tile .well { display: grid; place-items: center; padding: 28px; min-height: 180px; }
+  .tile .well img { max-height: 150px; width: auto; }
+  .tile.wide { grid-column: span 2; }
+  .tile figcaption { padding: 12px 16px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); background: var(--surface); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .tile figcaption a { color: var(--cyan); text-decoration: none; font-family: var(--f-mono); font-size: 12px; }
+  .well.dark { background: #0B0A18; } .well.light { background: #F6F5FC; } .well.grad { background: linear-gradient(135deg, #8B5CF6, #22D3EE); }
+  @media (max-width: 640px) { .tile.wide { grid-column: auto; } }
+  .clear { position: relative; width: min(320px, 100%); aspect-ratio: 1; margin: 0; }
+  .clear .mark { position: absolute; inset: 18%; width: 64%; }
+  .clear::before { content: ""; position: absolute; inset: 0; border: 2px dashed var(--red); border-radius: 4px; }
+  .clear::after { content: ""; position: absolute; inset: 18%; border: 1px solid var(--line-2); }
+  .clear span { position: absolute; font: 400 11px var(--f-pixel); color: var(--red); letter-spacing: .1em; }
+  .clear .x1 { top: 6%; left: 50%; transform: translateX(-50%); } .clear .x2 { left: 4%; top: 50%; transform: translateY(-50%); }
+  .sizes { display: flex; flex-wrap: wrap; gap: 32px; align-items: end; margin-top: 28px; }
+  .sizes figure { margin: 0; display: grid; gap: 10px; justify-items: start; font-size: 13px; color: var(--muted); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+  .sw { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+  .sw i { display: block; height: 110px; background: var(--c); }
+  .sw div { padding: 12px 14px; display: grid; gap: 2px; }
+  .sw b { font: 600 16px var(--f-display); }
+  .sw code { font: 12px/1.5 var(--f-mono); color: var(--muted); }
+  .sw p { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+  .type-row { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding-block: 22px; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .type-row:first-child { padding-top: 0; }
+  .type-row .meta { font-size: 13px; color: var(--muted); }
+  .type-row .meta b { display: block; color: var(--ink); font-size: 15px; }
+  .spec-a { font: 700 clamp(32px, 5vw, 56px)/1.05 var(--f-display); letter-spacing: -.04em; }
+  .spec-b { font: 400 18px/1.6 var(--f-body); color: var(--ink-2); max-width: 60ch; }
+  .spec-c { font: 400 20px/1.3 var(--f-pixel); letter-spacing: .08em; color: var(--cyan); }
+  .spec-d { font: 400 15px/1.6 var(--f-mono); color: var(--ink-2); }
+  @media (max-width: 640px) { .type-row { grid-template-columns: 1fr; gap: 8px; } }
+  .dd { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .dd figure { margin: 0; border-radius: 18px; border: 1px solid var(--line); overflow: hidden; background: var(--surface); }
+  .dd .well { background: var(--bg-2); display: grid; place-items: center; height: 200px; overflow: hidden; position: relative; }
+  .dd .mark { width: 130px; }
+  .dd figcaption { padding: 14px 16px; font-size: 14px; color: var(--ink-2); display: grid; gap: 4px; }
+  .dd figcaption b { font: 400 11px var(--f-pixel); letter-spacing: .1em; }
+  .do b { color: var(--green); } .dont b { color: var(--red); }
+  .dont .well::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - 1.5px), var(--red) 50%, transparent calc(50% + 1.5px)); opacity: .8; }
+  .mark-dgreen .sr-eyes rect, .mark-dgreen .sr-glow rect { fill: #22E08A; }
+  .mark-dstretch { transform: scaleX(1.7); }
+  .mark-dnomask rect[fill="#FFC23D"], .mark-dnomask rect[fill="#8B5CF6"] { opacity: 0; }
+  .mark-dfx { filter: drop-shadow(0 0 10px #FF3FA4) drop-shadow(8px 8px 0 #22D3EE) saturate(2) hue-rotate(40deg); transform: rotate(-12deg); }
+  .mark-dsmall { width: 40px !important; }
+  .voice { display: grid; gap: 14px; list-style: none; padding: 0; margin: 0; counter-reset: v; }
+  .voice li { counter-increment: v; display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+  .voice li::before { content: counter(v, decimal-leading-zero); font: 400 13px var(--f-pixel); color: var(--cyan); padding-top: 4px; }
+  .voice b { display: block; font: 600 18px/1.35 var(--f-display); margin-bottom: 4px; }
+  .voice span { color: var(--ink-2); font-size: 15px; }
+  .dl { display: grid; gap: 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+  .dl a { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+  .dl a span:last-child { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); }
+  .dl a:hover span:first-child { color: var(--cyan); }
+  @media (max-width: 860px) { .bb-hero, .bb-sec { grid-template-columns: 1fr; } .bb-hero .mark { max-width: 220px; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="nav-brand" href="index.html" aria-label="StageRobot home">{{NAV_LOGO}}</a>
+    <a class="btn btn-ghost" href="index.html" style="margin-left:auto">← Back to site</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="bb-hero">
+    {{MARK:bbhero}}
+    <div>
+      <span class="eyebrow">Brand guidelines</span>
+      <h1>The Stage Robot <span class="grad-text">Brand Book</span></h1>
+      <p class="lead">Everything you need to represent The Stage Robot Company consistently — across print, digital, merch, and whatever the robot decides to do next.</p>
+      <p class="ver" style="margin-top:18px">Version <s>0.9</s> <s>1.0</s> <s>FINAL</s> <s>FINAL_v2</s> FINAL_v2_actually_final_USE_THIS — September 2026</p>
+    </div>
+  </section>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">01</span><h2>The mark</h2><p>Our mark is a pixelated robot holding the masks of comedy and tragedy — representing the dual nature of theatre, and the single nature of robots.</p></header>
+    <div class="tiles">
+      <figure class="tile wide"><div class="well dark"><img src="assets/img/logo/logo-horizontal-on-dark.svg" alt="Horizontal lockup on dark"></div><figcaption>Primary lockup — on dark <a href="assets/img/logo/logo-horizontal-on-dark.svg">SVG</a><a href="assets/img/logo/logo-horizontal-on-dark.png">PNG</a></figcaption></figure>
+      <figure class="tile"><div class="well dark"><img src="assets/img/logo/logo-mark.svg" alt="Robot mark"></div><figcaption>Mark <a href="assets/img/logo/logo-mark.svg">SVG</a><a href="assets/img/logo/logo-mark.png">PNG</a></figcaption></figure>
+      <figure class="tile wide"><div class="well light"><img src="assets/img/logo/logo-horizontal-on-light.svg" alt="Horizontal lockup on light"></div><figcaption>Primary lockup — on light <a href="assets/img/logo/logo-horizontal-on-light.svg">SVG</a><a href="assets/img/logo/logo-horizontal-on-light.png">PNG</a></figcaption></figure>
+      <figure class="tile"><div class="well grad"><img src="assets/img/logo/app-icon.svg" alt="App icon"></div><figcaption>App icon <a href="assets/img/logo/app-icon.svg">SVG</a><a href="assets/img/logo/app-icon.png">PNG</a></figcaption></figure>
+      <figure class="tile"><div class="well dark"><img src="assets/img/logo/logo-stacked-on-dark.svg" alt="Stacked lockup on dark"></div><figcaption>Stacked — dark <a href="assets/img/logo/logo-stacked-on-dark.svg">SVG</a><a href="assets/img/logo/logo-stacked-on-dark.png">PNG</a></figcaption></figure>
+      <figure class="tile"><div class="well light"><img src="assets/img/logo/logo-stacked-on-light.svg" alt="Stacked lockup on light"></div><figcaption>Stacked — light <a href="assets/img/logo/logo-stacked-on-light.svg">SVG</a><a href="assets/img/logo/logo-stacked-on-light.png">PNG</a></figcaption></figure>
+      <figure class="tile"><div class="well light"><img src="assets/img/logo/logo-mark-mono-black.svg" alt="One-color mark in black with red eyes"></div><figcaption>One-color* <a href="assets/img/logo/logo-mark-mono-black.svg">SVG</a><a href="assets/img/logo/logo-mark-mono-black.png">PNG</a></figcaption></figure>
+      <figure class="tile wide"><div class="well dark"><img src="assets/img/logo/logo-horizontal-mono-white.svg" alt="One-color horizontal lockup in white with red eyes"></div><figcaption>One-color horizontal — reversed* <a href="assets/img/logo/logo-horizontal-mono-white.svg">SVG</a><a href="assets/img/logo/logo-horizontal-mono-white.png">PNG</a></figcaption></figure>
+    </div>
+  </section>
+  <p class="fine" style="margin:-40px 0 40px">*One-color versions contain two colors. The eyes are always red. Do not ask why.</p>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">02</span><h2>Clear space &amp; size</h2><p>Give the robot room. It needs room. It has asked for room.</p></header>
+    <div>
+      <figure class="clear">{{MARK:bbclear}}<span class="x1">X</span><span class="x2">X</span></figure>
+      <p style="margin-top:20px;max-width:60ch;color:var(--ink-2)">Minimum clear space is <b>X</b>, where X is three robot eyes. Nothing may enter this space. Things that enter this space are not seen again.</p>
+      <div class="sizes">
+        <figure><img src="assets/img/logo/logo-mark.svg" alt="" width="24" height="24">Mark — 24 px minimum</figure>
+        <figure><img src="assets/img/logo/logo-horizontal-on-dark.svg" alt="" style="height:24px;width:auto;background:#0B0A18;padding:4px;border-radius:4px">Horizontal — 120 px minimum</figure>
+        <figure><img src="favicon.svg" alt="" width="32" height="32">Favicon — the head, alone</figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">03</span><h2>Color</h2><p>A palette built on darkness, gradient and one non-negotiable red.</p></header>
+    <div class="swatches">
+      <div class="sw" style="--c:#0B0A18"><i></i><div><b>Backstage Black</b><code>#0B0A18 · PMS Black 6 C-ish</code><p>Our primary ground. The color of a blackout — and of what happens during one.</p></div></div>
+      <div class="sw" style="--c:#8B5CF6"><i></i><div><b>Synthetic Violet</b><code>#8B5CF6 · PMS 2665 C</code><p>Innovation, imagination, and the default color of every AI startup — by choice.</p></div></div>
+      <div class="sw" style="--c:#22D3EE"><i></i><div><b>Haze Cyan</b><code>#22D3EE · PMS 306 C</code><p>Clarity — as seen through haze.</p></div></div>
+      <div class="sw" style="--c:#FF1E3C"><i></i><div><b>Evil Eye Red</b><code>#FF1E3C · PMS "Do Not Ask"</code><p>For the eyes only. And the antenna. And the EVIL LED. And the chest button.</p></div></div>
+      <div class="sw" style="--c:#FFC23D"><i></i><div><b>Matinee Gold</b><code>#FFC23D · PMS 123 C</code><p>Comedy. Reserved for the happy mask.</p></div></div>
+      <div class="sw" style="--c:#D4D5E6"><i></i><div><b>Chrome Ambition</b><code>#D4D5E6 · PMS Cool Gray 1 C</code><p>The robot's body. Brushed, never polished.</p></div></div>
+      <div class="sw" style="--c:#8F91AB"><i></i><div><b>Gaffer Grey</b><code>#8F91AB · PMS 7544 C</code><p>Holds everything together. Leaves residue.</p></div></div>
+      <div class="sw" style="--c:linear-gradient(95deg,#8B5CF6,#22D3EE)"><i></i><div><b>The Gradient</b><code>Violet → Cyan, 95°</code><p>Apply generously. Then apply again.</p></div></div>
+    </div>
+  </section>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">04</span><h2>Typography</h2><p>Four typefaces — because three felt restrained.</p></header>
+    <div>
+      <div class="type-row"><div class="meta"><b>Space Grotesk</b>Display · 600–700</div><div class="spec-a">We don't make robots.</div></div>
+      <div class="type-row"><div class="meta"><b>Inter</b>Body · 400–600</div><div class="spec-b">The Stage Robot Company builds interesting theatrical technology — for lighting, video and control. It's seamless, scalable and, above all, theatrical.</div></div>
+      <div class="type-row"><div class="meta"><b>Silkscreen</b>Labels · pixel accent</div><div class="spec-c">UNIT 01 — NOT A ROBOT</div></div>
+      <div class="type-row"><div class="meta"><b>JetBrains Mono</b>Specs · data · logs</div><div class="spec-d">GET QUEUED_MESSAGE (0x0020) → STATUS_ERROR</div></div>
+    </div>
+  </section>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">05</span><h2>Do &amp; don't</h2><p>The mark is sacred. The mark is watching.</p></header>
+    <div class="dd">
+      <figure class="do"><div class="well" style="background:#0B0A18">{{MARK:ddo}}</div><figcaption><b>DO</b>Use the mark on Backstage Black, where it is most comfortable — and most powerful.</figcaption></figure>
+      <figure class="dont"><div class="well">{{MARK:dgreen}}</div><figcaption><b>DON'T</b>Never turn the eyes green. The eyes are always red. Do not ask why.</figcaption></figure>
+      <figure class="dont"><div class="well">{{MARK:dstretch}}</div><figcaption><b>DON'T</b>Stretch, squash or otherwise reshape the robot. It remembers.</figcaption></figure>
+      <figure class="dont"><div class="well">{{MARK:dnomask}}</div><figcaption><b>DON'T</b>Remove the masks. The masks' eyes stay behind. They always stay behind.</figcaption></figure>
+      <figure class="dont"><div class="well">{{MARK:dfx}}</div><figcaption><b>DON'T</b>Add drop shadows, glows, rotation or hue shifts. (We tried. Legal got involved.)</figcaption></figure>
+      <figure class="dont"><div class="well">{{MARK:dsmall}}</div><figcaption><b>DON'T</b>Make it small enough to escape.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">06</span><h2>Voice &amp; tone</h2><p>How StageRobot sounds — confident, visionary and structurally committed to em-dashes.</p></header>
+    <ol class="voice">
+      <li><div><b>Every sentence deserves an em-dash — or three.</b><span>Commas are for companies that make things. We make what comes next — and what comes next is a dash.</span></div></li>
+      <li><div><b>It's not just a feature — it's a paradigm.</b><span>Never describe a product as a thing. Describe it as a way of seeing the thing.</span></div></li>
+      <li><div><b>Speak in threes. Always threes. Forever threes.</b><span>Seamless, scalable, and theatrical. Innovation, integration, and intimidation. Pack, stream, and unpack.</span></div></li>
+      <li><div><b>Never say what the product does when you can say what it enables.</b><span>See: PVA. Do not see: what PVA does.</span></div></li>
+      <li><div><b>Do not mention the robots.</b><span>We don't make robots.</span></div></li>
+    </ol>
+  </section>
+
+  <section class="bb-sec">
+    <header><span class="eyebrow">07</span><h2>Downloads</h2><p>The complete logo package. Vector and raster. Handle with care.</p></header>
+    <div class="dl">
+      <a href="assets/img/logo/logo-horizontal-on-dark.svg"><span>Horizontal lockup — on dark</span><span>SVG · PNG 1600w</span></a>
+      <a href="assets/img/logo/logo-horizontal-on-light.svg"><span>Horizontal lockup — on light</span><span>SVG · PNG 1600w</span></a>
+      <a href="assets/img/logo/logo-stacked-on-dark.svg"><span>Stacked lockup — on dark</span><span>SVG · PNG 1024w</span></a>
+      <a href="assets/img/logo/logo-stacked-on-light.svg"><span>Stacked lockup — on light</span><span>SVG · PNG 1024w</span></a>
+      <a href="assets/img/logo/logo-mark.svg"><span>Mark — full color</span><span>SVG · PNG 1024w</span></a>
+      <a href="assets/img/logo/logo-mark-mono-white.svg"><span>Mark — one-color white (red eyes)</span><span>SVG · PNG 1024w</span></a>
+      <a href="assets/img/logo/logo-mark-mono-black.svg"><span>Mark — one-color black (red eyes)</span><span>SVG · PNG 1024w</span></a>
+      <a href="assets/img/logo/app-icon.svg"><span>App icon</span><span>SVG · PNG 1024w</span></a>
+      <a href="assets/img/og-image.png"><span>Social share image</span><span>PNG 1200×630</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" style="padding-block:40px">
+  <div class="wrap"><p class="fine">© 2019–2031 The Stage Robot Company, LLC. These guidelines are binding. The robot has signed them.</p></div>
+</footer>
+</body>
+</html>

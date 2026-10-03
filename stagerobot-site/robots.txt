@@ -1,0 +1,10 @@
+# StageRobot.com — robots.txt
+# Robots are welcome. Humans, please see below.
+
+User-agent: *
+Allow: /
+
+User-agent: humans
+Disallow: /
+
+# Sector C is not indexed. Sector C does not exist.
